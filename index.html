@@ -132,7 +132,7 @@
             }, 400); // Update dots every 400 milliseconds
 
             // 3. Simulate a delay (e.g., 1.5 to 2.5 seconds)
-            const randomDelay = 1500 + Math.random() * 1000;
+            const randomDelay = 4500 + Math.random() * 1000;
 
             setTimeout(() => {
                 // 4. Stop the thinking animation
@@ -141,7 +141,7 @@
                 thinkingDiv.style.display = 'none'; // Hide the thinking text
 
                 // 5. Show the final answer
-                answerDiv.textContent = 'Nee';
+                answerDiv.textContent = 'Nee, daar kun je helaas niet voor bellen.';
                 answerDiv.style.display = 'block';
 
                  // Optional: Clear the input field after showing the answer
