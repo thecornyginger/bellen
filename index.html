@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kan ik Daniël ergens voor bellen?</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            justify-content: center; /* Center vertically */
+            align-items: center;     /* Center horizontally */
+            min-height: 100vh;       /* Take full viewport height */
+            text-align: center;
+            background-color: #fffcfc;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #f2ede4;
+            padding: 30px;
+            border-radius: 8px;
+
+        }
+
+        h1 {
+            color: #2b2821;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block; /* Make label take its own line */
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 80%; /* Adjust width as needed */
+            max-width: 300px; /* Max width */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px; /* Space below input */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #e8542f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Area for showing thinking/result */
+        .result-area {
+            margin-top: 25px;
+            min-height: 30px; /* Reserve space to avoid layout jump */
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        #thinking {
+            color: #555; /* Grey color for thinking text */
+            display: none; /* Hidden by default */
+        }
+
+        #answer {
+            color: #e8542f; /* Red color for the "Nee" */
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Kan ik Daniël ergens voor bellen?</h1>
+
+        <form id="question-form">
+            <label for="reason">Waarvoor zou je willen bellen?</label>
+            <input type="text" id="reason" name="reason" placeholder="bv. een snelle vraag...">
+            <button type="submit">Vraag het</button>
+        </form>
+
+        <div class="result-area">
+            <div id="thinking">Aan het denken...</div>
+            <div id="answer"></div>
+        </div>
+    </div>
+
+    <script>
+        // Get references to the HTML elements
+        const form = document.getElementById('question-form');
+        const thinkingDiv = document.getElementById('thinking');
+        const answerDiv = document.getElementById('answer');
+        const inputField = document.getElementById('reason'); // Get input field
+
+        let thinkingInterval = null; // Variable to store the interval ID for dots animation
+
+        // Add an event listener for the form submission
+        form.addEventListener('submit', function(event) {
+            // Prevent the default form submission behavior (which reloads the page)
+            event.preventDefault();
+
+            // 1. Clear previous result and hide answer
+            answerDiv.textContent = '';
+            answerDiv.style.display = 'none';
+
+            // Clear any previous thinking animation interval
+            if (thinkingInterval) {
+                clearInterval(thinkingInterval);
+            }
+
+            // 2. Show the 'thinking' indicator and start dot animation
+            let dotCount = 1;
+            thinkingDiv.textContent = 'Aan het denken.'; // Initial text
+            thinkingDiv.style.display = 'block';
+
+            // Start an interval to animate the dots
+            thinkingInterval = setInterval(() => {
+                dotCount = (dotCount % 3) + 1; // Cycle through 1, 2, 3 dots
+                thinkingDiv.textContent = 'Aan het denken' + '.'.repeat(dotCount);
+            }, 400); // Update dots every 400 milliseconds
+
+            // 3. Simulate a delay (e.g., 1.5 to 2.5 seconds)
+            const randomDelay = 1500 + Math.random() * 1000;
+
+            setTimeout(() => {
+                // 4. Stop the thinking animation
+                clearInterval(thinkingInterval); // Stop the dot animation
+                thinkingInterval = null; // Reset interval variable
+                thinkingDiv.style.display = 'none'; // Hide the thinking text
+
+                // 5. Show the final answer
+                answerDiv.textContent = 'Nee';
+                answerDiv.style.display = 'block';
+
+                 // Optional: Clear the input field after showing the answer
+                 // inputField.value = '';
+
+            }, randomDelay); // Wait for the calculated delay
+        });
+    </script>
+
+</body>
+</html>
